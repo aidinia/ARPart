@@ -8,8 +8,6 @@ using UnityEngine.XR.ARSubsystems;
 public class objectScript : MonoBehaviour
 {
     public GameObject square;
-    public TextMesh text;
-    public TextMesh dedo;
     public GameObject spawnedObject { get; private set; }
 
     ARRaycastManager m_RaycastManager;
@@ -18,12 +16,6 @@ public class objectScript : MonoBehaviour
 
 
 
-    public objectScript(GameObject _square, TextMesh _text, TextMesh _dedo)
-    {
-        square = _square;
-        text = _text;
-        dedo = _dedo;
-    }
 
     void Awake()
     {
@@ -63,19 +55,18 @@ public class objectScript : MonoBehaviour
                     var touchObj = objects[index];
                     index = -1;
                     touchObj.transform.position = hitPose.position;
-
-                    text.text = touchObj.transform.position.ToString();
-                    dedo.text = "same";
                 }
                 else {
                     Vector3 cubePosition = hitPose.position + new Vector3(0, 1, 0);
                     spawnedObject = Instantiate(square, cubePosition, hitPose.rotation);
-                    var cubeRenderer = spawnedObject.GetComponent<Renderer>();
 
+                    var anchor = GetComponent<ARAnchorManager>().AddAnchor(new Pose(cubePosition, hitPose.rotation));
+                    spawnedObject.transform.parent = anchor.transform;
+                    ARCloudManagerANchors.QueueAnchor(anchor);
                     //Call SetColor using the shader property name "_Color" and setting the color to red
+                    var cubeRenderer = spawnedObject.GetComponent<Renderer>();
                     cubeRenderer.material.SetColor("_Color", Random.ColorHSV());
                     objects.Add(spawnedObject);
-                    text.text = spawnedObject.transform.position.ToString();
 
                 }
             }
@@ -83,6 +74,10 @@ public class objectScript : MonoBehaviour
             }
         }
 
+    public void RecreatePlacement()
+    {
+
+    }
 
     }
 

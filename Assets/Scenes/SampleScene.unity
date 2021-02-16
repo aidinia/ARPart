@@ -150,7 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49703031b90d9b142937793074e7d28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 159618981}
 --- !u!4 &43007014
 Transform:
   m_ObjectHideFlags: 0
@@ -177,7 +176,7 @@ GameObject:
   - component: {fileID: 159618982}
   - component: {fileID: 159618981}
   m_Layer: 0
-  m_Name: New Text
+  m_Name: DebugText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -684,6 +683,7 @@ GameObject:
   - component: {fileID: 1603445231}
   - component: {fileID: 1603445232}
   - component: {fileID: 1603445233}
+  - component: {fileID: 1603445234}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -761,8 +761,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   square: {fileID: 6825838571865835575, guid: 487acca539ce03546ac2c794add502b4, type: 3}
-  text: {fileID: 750274915}
-  dedo: {fileID: 221797260}
 --- !u!114 &1603445231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,8 +800,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5730d7a4265b3b4ab9d1981df6f34f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIcon: {fileID: 0}
-  text: {fileID: 0}
+--- !u!114 &1603445234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603445225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnchorPrefab: {fileID: 0}
 --- !u!1 &1813357477
 GameObject:
   m_ObjectHideFlags: 0
