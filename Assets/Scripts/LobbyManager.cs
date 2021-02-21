@@ -33,10 +33,9 @@ public class LobbyManager : MonoBehaviour
 
     public void OnClickCreateRoom()
     {
-
-        Debug.Log($"Click");
         roomName = nameInput.text;// == null ? PhotonNetwork.CountOfRooms.ToString() : nameInput.text;
         PhoNetworkManager.instance.CreateRoom(roomName);
+
     }
     public void OnClickJoinRoom()
     {
@@ -61,7 +60,35 @@ public class LobbyManager : MonoBehaviour
         thisPlayer.GetComponent<Image>().sprite = (Sprite)icon;
     }
 
-    public static void CreatePlayer()
+    public static void ChangeMenu(bool starter)
+    {
+
+
+        var roomName = GameObject.Find("RoomName").GetComponent<Text>();
+        roomName.text = PhotonNetwork.CurrentRoom.Name;
+
+        var roomPlayers = GameObject.Find("NumOfPlayers").GetComponent<Text>();
+        roomPlayers.text = "Current players: " + PhotonNetwork.CurrentRoom.PlayerCount;
+
+        var startGameButton = GameObject.Find("StartGame").GetComponent<Button>();
+
+
+        if (starter)
+        {
+            startGameButton.onClick.AddListener(StartGame);
+        }
+        else
+        {
+            GameObject.Destroy(startGameButton);
+        }
+
+        GameObject.Find("EnterMenu").SetActive(false);
+
+
+        InitiatePlayer();
+    }
+
+    public void CreatePlayer()
     {
 
         var playerHolder = GameObject.Find("PlayerHolder");
@@ -69,31 +96,15 @@ public class LobbyManager : MonoBehaviour
         playerHolder.GetComponent<Image>().sprite = playerData.GetComponent<Image>().sprite;
         playerHolder.GetComponentInChildren<Text>().text = GameObject.Find("LocalPlayerName").GetComponent<InputField>().text;
 
-        InitiatePlayer();
     }
     public static void InitiatePlayer(){
 
-        var player = GameObject.Find("PlayerHolder");
-        var playerNumber = player.GetComponent<Image>().sprite.name.Substring(0,3);
-        if(!playerNumber.Equals("001") && !playerNumber.Equals("004") && !playerNumber.Equals("002") && !playerNumber.Equals("006"))
-        {
-            playerNumber = "001";
-        }
+    
         var currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        var canvas = GameObject.Find("RoomLobby");
-        var thisPlayer = PhotonNetwork.Instantiate("Player" + playerNumber, canvas.transform.position, canvas.transform.rotation);
-        thisPlayer.GetComponentInChildren<Text>().text = player.GetComponentInChildren<Text>().text;
+        var RoomLobby = GameObject.Find("RoomLobby").GetComponent<Canvas>();
+        var thisPlayer = PhotonNetwork.Instantiate("Player00" + currentPlayers, RoomLobby.transform.position, RoomLobby.transform.rotation);
        
-        GameObject.Destroy(player);
-        var roomName = GameObject.Find("RoomName").GetComponent<Text>();
-        var roomPlayers = GameObject.Find("NumOfPlayers").GetComponent<Text>();
-        var startGameButton = GameObject.Find("StartGame").GetComponent<Button>();
-
-        roomName.text = PhotonNetwork.CurrentRoom.Name; 
-        roomPlayers.text ="Current players: " + PhotonNetwork.CurrentRoom.PlayerCount;
-        startGameButton.onClick.AddListener(StartGame);
-    }
+           }
 
     public static void StartGame()
     {

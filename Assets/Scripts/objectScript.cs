@@ -63,6 +63,7 @@ public class objectScript : MonoBehaviour
                     var anchor = GetComponent<ARAnchorManager>().AddAnchor(new Pose(cubePosition, hitPose.rotation));
                     spawnedObject.transform.parent = anchor.transform;
                     ARCloudManagerANchors.QueueAnchor(anchor);
+
                     //Call SetColor using the shader property name "_Color" and setting the color to red
                     var cubeRenderer = spawnedObject.GetComponent<Renderer>();
                     cubeRenderer.material.SetColor("_Color", Random.ColorHSV());

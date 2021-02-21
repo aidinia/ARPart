@@ -6,11 +6,12 @@ using UnityEditor;
 public class PhoNetworkManager : MonoBehaviourPunCallbacks
 {
     public static PhoNetworkManager instance;
-    public GameObject RoomLobby;
     public Button create;
     public Button find;
 
-     void Awake()
+    public GameObject RoomLobby;
+
+    void Awake()
     {
         if(instance != null && instance != this)
         {
@@ -46,19 +47,23 @@ public class PhoNetworkManager : MonoBehaviourPunCallbacks
     {
         //        base.OnCreatedRoom();
         Debug.Log($"Connected to Room {PhotonNetwork.CurrentRoom.Name}");
+        RoomLobby.SetActive(true);
+        LobbyManager.ChangeMenu(true);
 
-        ChangeMenu();
     }
     public override void OnJoinedRoom()
     {
 
         Debug.Log($"Connected to Room {PhotonNetwork.CurrentRoom.Name}");
-        ChangeMenu();
+        RoomLobby.SetActive(true);
+        LobbyManager.ChangeMenu(false);
+
     }
 
     public void CreateRoom(string name)
     {
         PhotonNetwork.CreateRoom(name);
+
         Debug.Log($"Created room name is {name}");
 
     }
@@ -68,12 +73,5 @@ public class PhoNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(name);
     }
 
-    public void ChangeMenu()
-    {
-        RoomLobby.SetActive(true);
-        LobbyManager.CreatePlayer();
-        GameObject.Find("EnterMenu").SetActive(false);
-        
-
-    }
+   
 }
